@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>News Letter Home</title>
+        <!-- Bootstrap CSS -->
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        />
+        <style>
+            /* Navbar styling */
+            .navbar {
+                background-color: #333; /* Dark Grey color */
+            }
+
+            .navbar-brand {
+                color: #000; /* Black color */
+                font-weight: bold;
+            }
+
+            .navbar-nav {
+                margin-left: auto;
+            }
+
+            .navbar-nav a {
+                color: white;
+                margin-right: 15px;
+            }
+
+            /* Main content styling */
+            .content-container {
+                background-image: url("https://images.unsplash.com/photo-1470790376778-a9fbc86d70e2?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bG9naW4lMjBwYWdlJTIwbmV3cyUyMGxldHRlcnxlbnwwfHwwfHx8MA%3D%3D");
+                background-size: cover;
+                background-position: center;
+                height: 100vh;
+                padding: 60px 0;
+                overflow: hidden; /* Ensure the background image spans the whole viewport */
+            }
+
+            .post-wall {
+                background-color: rgba(255, 255, 255, 0.8);
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                padding: 20px;
+                overflow-y: auto;
+                height: 70vh;
+            }
+
+            .post {
+                margin-bottom: 20px;
+            }
+
+            .post img {
+                max-width: 100%;
+                border-radius: 8px;
+            }
+
+            /* Post message form styling */
+            .post-message-form {
+                background-color: rgba(255, 255, 255, 0.8);
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                padding: 20px;
+                height: 70vh;
+            }
+
+            .post-message-form textarea {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                box-sizing: border-box;
+                font-size: 16px;
+            }
+
+            .post-message-form input[type="file"] {
+                margin-bottom: 20px;
+            }
+
+            .post-message-form button {
+                background-color: #5cb85c; /* Green color */
+                color: white;
+                padding: 15px 20px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 16px;
+                width: 100%;
+            }
+
+            .post-message-form button:hover {
+                background-color: #4cae4c; /* Darker green on hover */
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#">News Letter Board</a>
+            <div class="navbar-nav">
+                <a href="#cs">CS</a>
+                <a href="#electronics">Electronics</a>
+                <a href="#civil">Civil</a>
+                <a href="#">View Profile</a>
+                <a href="#">Log Out</a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container-fluid content-container" id="cs">
+            <!-- Use the department's id in the href to link to specific sections -->
+            <div class="row">
+                <!-- Post Wall -->
+                <div class="col-md-6">
+                    <div class="post-wall" id="postWall">
+                        <!-- Sample Post -->
+                        <div class="post">
+                            <p><strong>Username:</strong> John Doe</p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit. Sed ac dolor eget odio varius
+                                luctus. In hac habitasse platea dictumst.
+                            </p>
+                            <img
+                                src="https://via.placeholder.com/300"
+                                alt="Sample Image"
+                            />
+                        </div>
+                        <!-- End Sample Post -->
+
+                        <!-- Add more posts dynamically using JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Post Message Form -->
+                <div class="col-md-6">
+                    <div class="post-message-form">
+                        <h2>Create Post</h2>
+                        <textarea
+                            placeholder="Type your message here..."
+                            rows="4"
+                        ></textarea>
+                        <input type="file" accept="image/*" multiple />
+                        <button onclick="submitPost()">Post</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+        <script>
+            // Sample JavaScript function to submit posts (needs backend implementation)
+            function submitPost() {
+                var postText = document.querySelector(
+                    ".post-message-form textarea",
+                ).value;
+
+                // You can add logic here to handle image uploads and save posts to the database
+
+                // For now, let's just append a sample post to the wall
+                var postWall = document.getElementById("postWall");
+                var samplePost = document.createElement("div");
+                samplePost.className = "post";
+                samplePost.innerHTML =
+                    "<p><strong>Username:</strong> John Doe</p>" +
+                    "<p>" +
+                    postText +
+                    "</p>" +
+                    '<img src="https://via.placeholder.com/300" alt="Sample Image">';
+                postWall.appendChild(samplePost);
+
+                // Clear the input fields
+                document.querySelector(".post-message-form textarea").value =
+                    "";
+            }
+        </script>
+    </body>
+</html>

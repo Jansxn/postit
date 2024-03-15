@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sign Up Page</title>
+        <!-- Bootstrap CSS -->
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        />
+        <style>
+            /* Navbar styling */
+            .navbar {
+                background-color: #333; /* Dark Grey color */
+            }
+
+            .navbar-brand {
+                color: #000; /* Black color */
+                font-weight: bold;
+            }
+
+            /* Signup form styling */
+            .signup-container {
+                background-image: url("https://images.unsplash.com/photo-1470790376778-a9fbc86d70e2?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bG9naW4lMjBwYWdlJTIwbmV3cyUyMGxldHRlcnxlbnwwfHwwfHx8MA%3D%3D");
+                background-size: cover;
+                background-position: center;
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .signup-form {
+                background-color: rgba(255, 255, 255, 0.8);
+                padding: 60px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+                width: 500px;
+            }
+
+            .signup-form h2 {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+            .signup-form input[type="text"],
+            .signup-form input[type="password"] {
+                width: 100%;
+                padding: 15px;
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                box-sizing: border-box;
+                font-size: 16px;
+            }
+
+            .signup-form input[type="submit"] {
+                background-color: #5cb85c; /* Green color */
+                color: white;
+                padding: 15px 20px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 16px;
+                width: 100%;
+            }
+
+            .signup-form input[type="submit"]:hover {
+                background-color: #4cae4c; /* Darker green on hover */
+            }
+
+            .signup-form a {
+                color: #5bc0de; /* Blue color for links */
+                text-decoration: none;
+                display: block;
+                text-align: center;
+                margin-top: 20px;
+                font-size: 16px;
+            }
+
+            .signup-form a:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#">News Letter Board</a>
+        </nav>
+
+        <!-- Signup form -->
+        <div class="signup-container">
+            <div class="signup-form">
+                <h2>Sign Up</h2>
+                <form>
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Full Name"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Username"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="password"
+                            class="form-control"
+                            placeholder="Password"
+                            required
+                        />
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        Sign Up
+                    </button>
+                    <a href="#">Already have an account? Login</a>
+                </form>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </body>
+</html>
