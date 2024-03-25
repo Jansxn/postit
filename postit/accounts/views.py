@@ -19,7 +19,7 @@ def signup(request):
         account.save()
         print("User Created")
         
-        return redirect("/")   
+        return redirect("/login")   
     else:
         return render(request, "signup.html")
 
@@ -46,3 +46,7 @@ def login(request):
         return redirect("/")
     else:
         return render(request, "login.html")
+    
+def logout(request):
+    auth.logout(request)
+    return redirect("/")
