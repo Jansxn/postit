@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib import messages
+from django.contrib import messages, auth
 
 def signup(request):
     if request.method == "POST":
@@ -24,4 +24,25 @@ def signup(request):
         return render(request, "signup.html")
 
 def login(request):
-    return render(request, "login.html")
+    if request.method == "POST":
+        user = request.POST.get("user", None)
+        password = request.POST.get("pass", None)
+        print(user, password)
+        
+        user = User.objects.filter(username=user).first()
+        if user is None:
+            print("User does not exist")
+            messages.error(request, "User does not exist.")
+            return redirect("/login")
+        
+        if not user.check_password(password):
+            print("Incorrect Password")
+            messages.error(request, "Incorrect Password.")
+            return redirect("/login")
+        
+        auth.login(request, user)
+        
+        print("User Logged In")
+        return redirect("/")
+    else:
+        return render(request, "login.html")

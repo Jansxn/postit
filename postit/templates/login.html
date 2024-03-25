@@ -126,18 +126,6 @@
                 font-size: 16px;
             }
         </style>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function(){
-                $('form').submit(function(e){
-                    e.preventDefault();
-                    var username = $('input[placeholder="Username"]').val();
-                    var password = $('input[placeholder="Password"]').val();
-                    console.log("Username: " + username);
-                    console.log("Password: " + password);
-                });
-            });
-        </script>
     </head>
     <body>
         <!-- Navbar -->
@@ -149,12 +137,14 @@
         <div class="login-container">
             <div class="login-form">
                 <h2>Login</h2>
-                <form>
+                <form method="POST">
+                    {% csrf_token %}
                     <div class="form-group">
                         <input
                             type="text"
                             class="form-control"
                             placeholder="Username"
+                            name = "user"
                             required
                         />
                     </div>
@@ -163,10 +153,20 @@
                             type="password"
                             class="form-control"
                             placeholder="Password"
+                            name = "pass"
                             required
                         />
                     </div>
-                    <button type="submit" class="btn btn-success">Login</button>
+                    <button type="submit" class="btn btn-success">
+                        {% if messages %}
+                            {% for message in messages %}
+                                {{message}}
+                            {% endfor %}
+                            Try Again
+                        {% else %}
+                        Login
+                        {% endif %}
+                    </button>
                     <a href="#">New User? Sign Up</a>
                 </form>
                 <!-- Social login buttons -->
