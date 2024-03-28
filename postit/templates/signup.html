@@ -8,18 +8,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'navbar.css' %}" />
     <style>
-        /* Navbar styling */
-        .navbar {
-            background-color: #333;
-            /* Dark Grey color */
-        }
-
-        .navbar-brand {
-            color: #000;
-            /* Black color */
-            font-weight: bold;
-        }
 
         body {
             background-color: rgb(229, 232, 240);
@@ -102,10 +93,10 @@
             color: #aaa;
         }
 
-        button {
+        .button {
             margin-top: 10px;
             color: white;
-            padding: 25px;
+            padding: 15px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -145,9 +136,25 @@
 
 <body>
     <!-- Navbar -->
-    <!-- <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="/">News Letter Board</a>
-        </nav> -->
+    <div class="navbar">
+        <header class = "nav">
+            <nav>
+                <ul class="nav-links href-links">
+                    <li><a href="#">CS</a></li>
+                    <li><a href="#">Electronics</a></li>
+                    <li><a href="#">Civil</a></li>
+                </ul>
+                <ul class = "nav-links user-links">
+                    {%if user.is_authenticated %}
+                        <li><a href="/logout">Log Out</a></li>
+                    {%else%}
+                        <li><a href="/signup">Sign Up</a></li>
+                        <li><a href="/login">Log In</a></li>
+                    {%endif%}
+                </ul>
+            </nav>
+        </header>
+    </div>
 
     <!-- Signup form -->
     <div class="main-container">
@@ -173,7 +180,7 @@
                     <div class="form-group">
                         <input name="pass" type="password" class="form-control" placeholder="Password" required />
                     </div>
-                    <button type="submit" class="btn btn-info">
+                    <button type="submit" class="btn btn-info button">
                         {% if messages %}
                         {% for message in messages %}
                         {{message}}
