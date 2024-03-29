@@ -29,7 +29,6 @@
       rel="stylesheet"
     />
 
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     $(document).ready(function() {
@@ -42,7 +41,6 @@
     </script>
 
 
-    
     <style>
       body {
         font-family: "Nunito", sans-serif;
@@ -125,6 +123,21 @@
 
       .custom-nav-side .list-group-item-action:not(.active):hover  {
         color: black;
+      }
+
+
+
+      .postbox-main{
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .postbox-head{
+        margin-bottom: 5px;
+        font-size: 2rem;
+        font-weight: 600;
+        text-decoration: underline;
       }
 
       
@@ -232,6 +245,40 @@
     <main style="margin-top: 58px">
       <div class="container pt-4">
 
+        <div class = "postbox-main"> 
+            <h1 class = "postbox-head">{{postbox_name}} </h1>
+            <div class = "postbox-description">
+                {{postbox_description}}
+            </div>
+        </div>
+
+        <div class = "row post-form">
+            <div class = "col-lg-8">
+                <div class = "card mb-4">
+                    <div class = "card-body">
+                        
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="post-title">Title</label>
+                                <input type="text" class="form-control" id="post-title" name="post-title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="post-content">Content</label>
+                                <textarea class="form-control" id="post-content" name="post-content" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="post-file">File</label>
+                                <input type="file" class="form-control" id="post-file" name="post-file">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Post</button>
+                        </form>  
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
           <div class="col-lg-8">
             <div class="card mb-4">
@@ -270,7 +317,7 @@
                   opinions on various topics. You can also read posts from other
                   users and comment on them. Enjoy!
                 </p>
-      
+        
                 {% load static %}
                 <iframe id="pdf-preview" src="{% static 'example.pdf' %}" width="300" height="200" title=""></iframe>
                 <br />
