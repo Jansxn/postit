@@ -6,5 +6,5 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    re_path(r'^(?!login$|signup$|logout$)([a-zA-Z0-9_]+)/$', views.postbox, name='postbox'),
+    re_path(r'^(?!login$|signup$|logout$|admin$)([a-zA-Z0-9_]+)/$', views.postbox, name='postbox'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
