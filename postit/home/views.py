@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.contrib.auth.models import User
 from .models import Uploads
 from .forms import CreatePostForm
 
 def index(request):
-    title_field = Uploads.objects.all
+    # all_posts= Uploads.objects.all
+    all_posts = Uploads.objects.all().order_by('-id')
+    # username = request.user
     # title_list = list(title_field)
-    return render(request, "home.html",{"all": title_field})
+
+    context = {"all": all_posts}
+
+    return render(request, "home.html", context)
 
 def postbox(request, postbox_name):
     postbox_description = "This is a postbox for " + postbox_name
@@ -21,6 +26,11 @@ def createpost(request):
     if request.method == "POST":
         form = CreatePostForm(request.POST, request.FILES or None)
         if form.is_valid():
+            current_user = request.user
+            form.instance.user = current_user
+            current_page = request.POST.get('page_name')
+            print(f"Current Page: {current_page}")
+            form.instance.submission_page = current_page
             form.save()
             return redirect('index')
         else:

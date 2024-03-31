@@ -190,18 +190,17 @@
     <div class="container pt-4">
 
       <div>
-        <h1>This is home.html</h1>
+        <!-- <h1>This is home.html</h1> -->
         <ol>
           {% if not all %}
-          <p>Empty bro!!</p>
+          <h1>No posts yet!</h1>
+          <p>Come back later :)</p>
           {% else %}
-          {% for item in all %}
-          <li>{{ item.title }}</li>
-          <li>
-            <a href="{{ MEDIA_URL }}{{ item.file.url }}">{{ item.file.name }}</a>
-            <!-- <iframe id="pdf-preview" src="{{ MEDIA_URL }}{{ item.file.url }}" width="300" height="200" -->
-            <!-- title=""></iframe> -->
-          </li>
+          {% for post in all %}
+          <li>{{ post.title }} | {{ post.user.username }} | {{ post.submission_page }}</li>
+          <a href="{{ MEDIA_URL }}{{ item.file.url }}">{{ post.file.name }}</a>
+          <!-- <iframe id="pdf-preview" src="{{ MEDIA_URL }}{{ item.file.url }}" width="300" height="200" -->
+          <!-- title=""></iframe> -->
           {% endfor %}
           {% endif %}
         </ol>

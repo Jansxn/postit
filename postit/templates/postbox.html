@@ -140,13 +140,15 @@
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse custom-nav-side">
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+          <a href="{% url 'postbox' postbox_name='cse' %}" class="list-group-item list-group-item-action py-2 ripple"
+            aria-current="true">
             <span class="">CSE</span>
           </a>
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple active">
+          <a href="{% url 'postbox' postbox_name='electronics' %}"
+            class="list-group-item list-group-item-action py-2 ripple active">
             <span>Electronics</span>
           </a>
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+          <a href="{% url 'postbox' postbox_name='civil' %}" class="list-group-item list-group-item-action py-2 ripple">
             <span>Civil</span>
           </a>
         </div>
@@ -215,6 +217,7 @@
 
               <form method="POST" action="{% url 'createpost' %}" enctype="multipart/form-data">
                 {% csrf_token %}
+                <input type="hidden" name="page_name" value="{{ postbox_name }}">
                 <div class="form-group">
                   <label for="post-title">Title</label>
                   <input type="text" class="form-control" id="post-title" name="title" required>
