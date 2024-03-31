@@ -4,8 +4,8 @@ from .models import Uploads
 from .forms import CreatePostForm
 
 def index(request):
-    # all_posts= Uploads.objects.all
-    all_posts = Uploads.objects.all().order_by('-id')
+    all_posts= Uploads.objects.all
+    # all_posts = Uploads.objects.all().order_by('-id')
     # username = request.user
     # title_list = list(title_field)
 
