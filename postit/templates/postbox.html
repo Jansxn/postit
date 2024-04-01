@@ -157,6 +157,7 @@
       font-size: 2rem;
       font-weight: 600;
       text-decoration: underline;
+      text-transform:uppercase;
     }
   </style>
 </head>
@@ -240,6 +241,7 @@
         </div>
       </div>
 
+      {% if has_verified_permission or user.is_superuser %}
       <div class="row post-form">
         <div class="col-lg-8">
           <div class="card mb-4">
@@ -267,6 +269,7 @@
           </div>
         </div>
       </div>
+      {% endif %}
 
       {% for post in all %}
         <div class="row">

@@ -233,6 +233,10 @@
                             <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" disabled>
                         </div>
                         <div class="mb-3">
+                            <label for="usergroup" class="form-label">User Group</label>
+                            <input type="text" class="form-control" id="usergroup" name="usergroup" value="{{ user.groups.all.0.name }}" disabled>
+                        </div>
+                        <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password">
                         </div>

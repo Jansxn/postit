@@ -16,9 +16,12 @@ def index(request):
 def postbox(request, postbox_name):
     postbox_description = "This is a postbox for " + postbox_name
     # post = Post.objects.get(file_name=postbox_name)
+    has_verified_permission = request.user.groups.filter(name='verified').exists()
+    print(has_verified_permission)
     return render(request, "postbox.html", {
         "postbox_name": postbox_name,
-        "postbox_description": postbox_description
+        "postbox_description": postbox_description,
+        "has_verified_permission": has_verified_permission
     })
 
 
