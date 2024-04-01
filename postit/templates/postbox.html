@@ -267,6 +267,28 @@
         </div>
       </div>
 
+      {% for post in all %}
+        <div class="row">
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body position-relative">
+              <div class="position-absolute top-0 end-0 pe-2 pt-2">
+                {{ post.submission_page }}
+              </div>
+              <h2 class="card-title">{{ post.title }}</h2>
+              <h6 class="card-user">{{ post.user.username }}</h6>
+              <p class="card-text">
+                {{ post.content }}
+              </p>
+              <br />
+              <iframe id="pdf-preview" src="{{ MEDIA_URL }}{{ post.file.url }}" width="300" height="200" title=""></iframe>
+              <a href="{{ MEDIA_URL }}{{ post.file.url }}" class="btn btn-primary" id="download-btn" target="_blank">Download Doc</a>
+            </div>
+          </div>
+        </div>
+      </div>
+        {% endfor %}
+
       <div class="row">
         <div class="col-lg-8">
           <div class="card mb-4">
