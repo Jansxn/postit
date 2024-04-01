@@ -1,300 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>News Letter Home</title>
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <!-- Font Awesome -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- MDB -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Nunito"
-      rel="stylesheet"
-    />
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News Letter Home</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" />
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    $(document).ready(function() {
-      $('#download-btn').click(function(e) {
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Open PDF in a new window for download
+      $('#download-btn').click(function (e) {
         e.preventDefault(); // Prevent default link behavior
         var pdfUrl = $('#pdf-preview').attr('src');
         window.open(pdfUrl, '_blank'); // Open PDF in a new window for download
       });
+
+      // Get the current URL path and assign 'active' class
+      var path = window.location.pathname;
+      // Loop through each nav link
+      $('#sidebarMenu .list-group-item').each(function() {
+        var href = $(this).attr('href');
+
+        // Check if the href attribute matches the current URL path
+        if (path === href) {
+          // Add the 'active' class to the matching nav link
+          $(this).addClass('active');
+        }
+      });
+
+
+      // Handle form submission
+      $('.searchbar').submit(function(event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+  
+        // Get the entered postbox name
+        var postboxName = $(this).find('input[type="search"]').val().toLowerCase().trim();
+  
+        // Construct the URL based on the entered postbox name
+        var url = "/" + postboxName;
+  
+        // Navigate to the constructed URL
+        window.location.href = url;
+      });
     });
-    </script>
+  </script>
 
 
-    
-    <style>
-      body {
-        font-family: "Nunito", sans-serif;
-        background-color: rgb(229, 232, 240);
+
+  <style>
+    body {
+      font-family: "Nunito", sans-serif;
+      background-color: rgb(229, 232, 240);
+    }
+
+    @media (min-width: 991.98px) {
+      main {
+        padding-left: 240px;
       }
-      @media (min-width: 991.98px) {
-        main {
-          padding-left: 240px;
-        }
-      }
+    }
 
-      /* Sidebar */
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      padding: 58px 0 0;
+      /* Height of navbar */
+      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+      width: 240px;
+      z-index: 600;
+    }
+
+    @media (max-width: 991.98px) {
       .sidebar {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        padding: 58px 0 0; /* Height of navbar */
-        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-        width: 240px;
-        z-index: 600;
+        width: 100%;
       }
+    }
 
-      @media (max-width: 991.98px) {
-        .sidebar {
-          width: 100%;
-        }
-      }
-      .sidebar .active {
-        border-radius: 5px;
-        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-      }
+    .sidebar .active {
+      border-radius: 5px;
+      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    }
 
-      .sidebar-sticky {
-        position: relative;
-        top: 0;
-        height: calc(100vh - 48px);
-        padding-top: 0.5rem;
-        overflow-x: hidden;
-        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-      }
+    .sidebar-sticky {
+      position: relative;
+      top: 0;
+      height: calc(100vh - 48px);
+      padding-top: 0.5rem;
+      overflow-x: hidden;
+      overflow-y: auto;
+      /* Scrollable contents if viewport is shorter than content. */
+    }
 
-      .navbar-nav {
-        display: flex;
-        flex-direction: row;
-        gap: 30px;
-      }
+    .navbar-nav {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+    }
 
-      .navbar-nav li {
-        list-style-type: none;
-        border-radius: 5px;
-        padding: 2px;
-        transition: 0.3s ease-in-out;
-      }
+    .navbar-nav li {
+      list-style-type: none;
+      border-radius: 5px;
+      padding: 2px;
+      transition: 0.3s ease-in-out;
+    }
 
-      .navbar-nav li a {
-        text-decoration: none;
-        color: black;
-      }
+    .navbar-nav li a {
+      text-decoration: none;
+      color: black;
+    }
 
-      .navbar-nav li:hover {
-        text-decoration: underline;
-      }
+    .navbar-nav li:hover {
+      text-decoration: underline;
+    }
 
 
-      .custom-nav-main{
-        background-color:rgb(199, 217, 233, 0.3);
-        border: 1px solid #ccc;
-      }
+    .custom-nav-main {
+      background-color: rgb(199, 217, 233, 0.3);
+      border: 1px solid #ccc;
+    }
 
-      .custom-nav-side{
-        background-color:#333547;
-        border: 1px solid #ccc;
-        color: white  ;
-      }
+    .custom-nav-side {
+      background-color: #333547;
+      border: 1px solid #ccc;
+      color: white;
+    }
 
-      .custom-nav-side .list-group-item-action {
-        color: white;
-      }
+    .custom-nav-side .list-group-item-action {
+      color: white;
+    }
 
-      .custom-nav-side .list-group-item-action:not(.active):hover  {
-        color: black;
-      }
+    .custom-nav-side .list-group-item-action:not(.active):hover {
+      color: black;
+    }
+  </style>
+</head>
 
-      
-    </style>
-  </head>
-  <body>
-    <!--Main Navigation-->
-    <header>
-      <!-- Sidebar -->
-      <nav
-        id="sidebarMenu"
-        class="collapse d-lg-block sidebar collapse custom-nav-side"
-      >
-        <div class="position-sticky">
-          <div class="list-group list-group-flush mx-3 mt-4">
-            <a
-              href="#"
-              class="list-group-item list-group-item-action py-2 ripple"
-              aria-current="true"
-            >
-              <span class="">CSE</span>
-            </a>
-            <a
-              href="#"
-              class="list-group-item list-group-item-action py-2 ripple active"
-            >
-              <span>Electronics</span>
-            </a>
-            <a
-              href="#"
-              class="list-group-item list-group-item-action py-2 ripple"
-              >
-                <span>Civil</span>
-            </a>
-          </div>
-        </div>
-      </nav>
-      <!-- Sidebar -->
-
-      <!-- Navbar -->
-      <nav
-        id="main-navbar"
-        class="navbar navbar-expand-lg navbar-light fixed-top custom-nav-main"
-      >
-        <!-- Container wrapper -->
-        <div class="container-fluid">
-          <!-- Toggle button -->
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-mdb-toggle="collapse"
-            data-mdb-target="#sidebarMenu"
-            aria-controls="sidebarMenu"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <i class="fas fa-bars"></i>
-          </button>
-
-          <!-- Brand -->
-          <a class="navbar-brand" href="#">
-            <img
-              src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-              height="25"
-              alt="MDB Logo"
-              loading="lazy"
-            />
+<body>
+  <!--Main Navigation-->
+  <header>
+    <!-- Sidebar -->
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse custom-nav-side">
+      <div class="position-sticky">
+        <div class="list-group list-group-flush mx-3 mt-4">
+          <a href="{% url 'postbox' postbox_name='cse' %}" class="list-group-item list-group-item-action py-2 ripple"
+            aria-current="true">
+            <span class="">CSE</span>
           </a>
-          <!-- Search form -->
-          <form class="d-none d-md-flex input-group w-auto my-auto">
-            <input
-              autocomplete="off"
-              type="search"
-              class="form-control rounded"
-              placeholder="Enter PostBox"
-              style="min-width: 225px"
-            />
-            <span class="input-group-text border-0"
-              ><i class="fas fa-search"></i
-            ></span>
-          </form>
-
-          <!-- Right links -->
-          <ul class="navbar-nav ms-auto d-flex flex-row">
-            <!-- Notification dropdown -->
-            {%if user.is_authenticated %}
-            <li class="nav-item"><a href="/logout">Log Out</a></li>
-            {%else%}
-            <li class="nav-item"><a href="/signup">Sign Up</a></li>
-            <li class="nav-item"><a href="/login">Log In</a></li>
-            {%endif%}
-          </ul>
+          <a href="{% url 'postbox' postbox_name='electronics' %}"
+            class="list-group-item list-group-item-action py-2 ripple">
+            <span>Electronics</span>
+          </a>
+          <a href="{% url 'postbox' postbox_name='civil' %}" class="list-group-item list-group-item-action py-2 ripple">
+            <span>Civil</span>
+          </a>
         </div>
-        <!-- Container wrapper -->
-      </nav>
-      <!-- Navbar -->
-    </header>
-    <!--Main Navigation-->
+      </div>
+    </nav>
+    <!-- Sidebar -->
+
+    <!-- Navbar -->
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light fixed-top custom-nav-main">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
+          aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">
+          <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="25" alt="MDB Logo"
+            loading="lazy" />
+        </a>
+        <!-- Search form -->
+        <form class="d-none d-md-flex input-group w-auto my-auto searchbar">
+          <input autocomplete="off" type="search" class="form-control rounded" placeholder="Enter PostBox"
+            style="min-width: 225px" />
+          <span class="input-group-text border-0"><i class="fas fa-search"></i></span>
+        </form>
+
+        <!-- Right links -->
+        <ul class="navbar-nav ms-auto d-flex flex-row">
+          <!-- Notification dropdown -->
+          {%if user.is_authenticated %}
+          <li class="nav-item"><a href="/profile">View Profile</a></li>
+          <li class="nav-item"><a href="/logout">Log Out</a></li>
+          {%else%}
+          <li class="nav-item"><a href="/signup">Sign Up</a></li>
+          <li class="nav-item"><a href="/login">Log In</a></li>
+          {%endif%}
+        </ul>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+  </header>
+  <!--Main Navigation-->
 
 
 
 
 
-    <!--Main layout-->
-    <main style="margin-top: 58px">
-      <div class="container pt-4">
+  <!--Main layout-->
+  <main style="margin-top: 58px">
+    <div class="container pt-4">
 
+      <!-- <div>
+         <h1>This is home.html</h1>
+        <ol>
+          {% if not all %}
+          <h1>No posts yet!</h1>
+          <p>Come back later :)</p>
+          {% else %}
+          {% for post in all %}
+          <li>{{ post.title }} | {{ post.user.username }} | {{ post.submission_page }}</li>
+          <a href="{{ MEDIA_URL }}{{ post.file.url }}">{{ post.file.name }}</a>
+          <iframe id="pdf-preview" src="{{ MEDIA_URL }}{{ item.file.url }}" width="300" height="200"
+          < title=""></iframe>
+          {% endfor %}
+          {% endif %}
+        </ol>
+      </div> -->
+
+        {% for post in all %}
         <div class="row">
-          <div class="col-lg-8">
-            <div class="card mb-4">
-              <div class="card-body position-relative">
-                <div class="position-absolute top-0 end-0 pe-2 pt-2"> <!-- Add your text here -->
-                  Civil
-                </div>
-                <h2 class="card-title">PostBox</h2>
-                <h6 class="card-user">Jason</h6>
-                <p class="card-text">
-                  Welcome to PostBox! Here you can post your thoughts and
-                  opinions on various topics. You can also read posts from other
-                  users and comment on them. Enjoy!
-                </p>
-
-                {% load static %}
-                <iframe id="pdf-preview" src="{% static 'example.pdf' %}" width="300" height="200" title=""></iframe>
-                <br />
-                <a href="#" class="btn btn-primary" id="download-btn">Download Doc</a>
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body position-relative">
+              <div class="position-absolute top-0 end-0 pe-2 pt-2">
+                {{ post.submission_page }}
               </div>
+              <h2 class="card-title">{{ post.title }}</h2>
+              <h6 class="card-user">{{ post.user.username }}</h6>
+              <p class="card-text">
+                {{ post.content }}
+              </p>
+              <br />
+              <iframe id="pdf-preview" src="{{ MEDIA_URL }}{{ post.file.url }}" width="300" height="200" title=""></iframe> <br />
+              <a href="{{ MEDIA_URL }}{{ post.file.url }}" class="btn btn-primary" id="download-btn" target="_blank">Download Doc</a>
             </div>
           </div>
-        </div> 
+        </div>
+      </div>
+        {% endfor %}
+<!-- 
 
-        <div class="row">
-          <div class="col-lg-8">
-            <div class="card mb-4">
-              <div class="card-body position-relative"> <!-- Add position-relative here -->
-                <div class="position-absolute top-0 end-0 pe-2 pt-2"> <!-- Add your text here -->
-                  CSE
-                </div>
-                <h2 class="card-title">PostBox</h2>
-                <h6 class="card-user">Himanshu</h6>
-                <p class="card-text">
-                  Welcome to PostBox! Here you can post your thoughts and
-                  opinions on various topics. You can also read posts from other
-                  users and comment on them. Enjoy!
-                </p>
-      
-                {% load static %}
-                <iframe id="pdf-preview" src="{% static 'example.pdf' %}" width="300" height="200" title=""></iframe>
-                <br />
-                <a href="#" class="btn btn-primary" id="download-btn">Download Doc</a>
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body position-relative">
+              <div class="position-absolute top-0 end-0 pe-2 pt-2"> 
+                Civil
               </div>
+              <h2 class="card-title">PostBox</h2>
+              <h6 class="card-user">Jason</h6>
+              <p class="card-text">
+                Welcome to PostBox! Here you can post your thoughts and
+                opinions on various topics. You can also read posts from other
+                users and comment on them. Enjoy!
+              </p>
+
+              {% load static %}
+              <iframe id="pdf-preview" src="{% static 'example.pdf' %}" width="300" height="200" title=""></iframe>
+              <br />
+              <a href="#" class="btn btn-primary" id="download-btn">Download Doc</a>
             </div>
           </div>
-        </div>   
         </div>
-    </main>
-    <!--Main layout-->
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body position-relative"> 
+              <div class="position-absolute top-0 end-0 pe-2 pt-2"> 
+                CSE
+              </div>
+              <h2 class="card-title">PostBox</h2>
+              <h6 class="card-user">Himanshu</h6>
+              <p class="card-text">
+                Welcome to PostBox! Here you can post your thoughts and
+                opinions on various topics. You can also read posts from other
+                users and comment on them. Enjoy!
+              </p>
+
+              {% load static %}
+              <iframe id="pdf-preview" src="{% static 'example.pdf' %}" width="300" height="200" title=""></iframe>
+              <br />
+              <a href="#" class="btn btn-primary" id="download-btn">Download Doc</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </main>
+  <!--Main layout-->
 
 
 
 
 
 
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"
-    ></script>
-  </body>
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
+</body>
+
 </html>
