@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib import messages, auth
 
 from . models import Member
@@ -10,6 +10,7 @@ def signup(request):
         email = request.POST.get("email", None)
         name = request.POST.get("name", None)
         password = request.POST.get("pass", None)
+        
         print(user, name, password, email)
         
         if User.objects.filter(username=user).exists() or User.objects.filter(email=email).exists():
@@ -19,6 +20,9 @@ def signup(request):
         
         account = User.objects.create_user(username=user, email=email, password=password, first_name=name)
         account.save()
+        
+        group = Group.objects.get(name="viewer")
+        user.groups.add(group)
         print("User Created")
         
         return redirect("/login")   
@@ -52,3 +56,25 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect("/")
+
+
+def profile(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            name = request.POST.get("name", None)
+            username = request.POST.get("username", None)
+            password = request.POST.get("password", None)
+            
+            user = request.user
+            user.first_name = name
+            if username:  # Check if username is provided
+                user.username = username
+            if password:
+                user.set_password(password)
+            user.save()
+            
+            return redirect("/")  # Redirect to home page or any other desired URL
+        else:
+            return render(request, "profile.html", {"user": request.user})
+    else:
+        return redirect("/login")

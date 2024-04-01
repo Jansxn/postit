@@ -19,10 +19,40 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function () {
+      // Open PDF in a new window for download
       $('#download-btn').click(function (e) {
         e.preventDefault(); // Prevent default link behavior
         var pdfUrl = $('#pdf-preview').attr('src');
         window.open(pdfUrl, '_blank'); // Open PDF in a new window for download
+      });
+
+      // Get the current URL path and assign 'active' class
+      var path = window.location.pathname;
+      // Loop through each nav link
+      $('#sidebarMenu .list-group-item').each(function() {
+        var href = $(this).attr('href');
+
+        // Check if the href attribute matches the current URL path
+        if (path === href) {
+          // Add the 'active' class to the matching nav link
+          $(this).addClass('active');
+        }
+      });
+
+
+      // Handle form submission
+      $('.searchbar').submit(function(event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+  
+        // Get the entered postbox name
+        var postboxName = $(this).find('input[type="search"]').val().toLowerCase().trim();
+  
+        // Construct the URL based on the entered postbox name
+        var url = "/" + postboxName;
+  
+        // Navigate to the constructed URL
+        window.location.href = url;
       });
     });
   </script>
@@ -131,7 +161,7 @@
             <span class="">CSE</span>
           </a>
           <a href="{% url 'postbox' postbox_name='electronics' %}"
-            class="list-group-item list-group-item-action py-2 ripple active">
+            class="list-group-item list-group-item-action py-2 ripple">
             <span>Electronics</span>
           </a>
           <a href="{% url 'postbox' postbox_name='civil' %}" class="list-group-item list-group-item-action py-2 ripple">
@@ -158,7 +188,7 @@
             loading="lazy" />
         </a>
         <!-- Search form -->
-        <form class="d-none d-md-flex input-group w-auto my-auto">
+        <form class="d-none d-md-flex input-group w-auto my-auto searchbar">
           <input autocomplete="off" type="search" class="form-control rounded" placeholder="Enter PostBox"
             style="min-width: 225px" />
           <span class="input-group-text border-0"><i class="fas fa-search"></i></span>
@@ -168,6 +198,7 @@
         <ul class="navbar-nav ms-auto d-flex flex-row">
           <!-- Notification dropdown -->
           {%if user.is_authenticated %}
+          <li class="nav-item"><a href="/profile">View Profile</a></li>
           <li class="nav-item"><a href="/logout">Log Out</a></li>
           {%else%}
           <li class="nav-item"><a href="/signup">Sign Up</a></li>
@@ -189,8 +220,8 @@
   <main style="margin-top: 58px">
     <div class="container pt-4">
 
-      <div>
-        <!-- <h1>This is home.html</h1> -->
+      <!-- <div>
+         <h1>This is home.html</h1>
         <ol>
           {% if not all %}
           <h1>No posts yet!</h1>
@@ -199,18 +230,40 @@
           {% for post in all %}
           <li>{{ post.title }} | {{ post.user.username }} | {{ post.submission_page }}</li>
           <a href="{{ MEDIA_URL }}{{ post.file.url }}">{{ post.file.name }}</a>
-          <!-- <iframe id="pdf-preview" src="{{ MEDIA_URL }}{{ item.file.url }}" width="300" height="200" -->
-          <!-- title=""></iframe> -->
+          <iframe id="pdf-preview" src="{{ MEDIA_URL }}{{ item.file.url }}" width="300" height="200"
+          < title=""></iframe>
           {% endfor %}
           {% endif %}
         </ol>
-      </div>
+      </div> -->
 
-      <div class="row">
+        {% for post in all %}
+        <div class="row">
         <div class="col-lg-8">
           <div class="card mb-4">
             <div class="card-body position-relative">
-              <div class="position-absolute top-0 end-0 pe-2 pt-2"> <!-- Add your text here -->
+              <div class="position-absolute top-0 end-0 pe-2 pt-2">
+                {{ post.submission_page }}
+              </div>
+              <h2 class="card-title">{{ post.title }}</h2>
+              <h6 class="card-user">{{ post.user.username }}</h6>
+              <p class="card-text">
+                {{ post.content }}
+              </p>
+              <br />
+              <iframe id="pdf-preview" src="{{ MEDIA_URL }}{{ post.file.url }}" width="300" height="200" title=""></iframe> <br />
+              <a href="{{ MEDIA_URL }}{{ post.file.url }}" class="btn btn-primary" id="download-btn" target="_blank">Download Doc</a>
+            </div>
+          </div>
+        </div>
+      </div>
+        {% endfor %}
+<!-- 
+
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body position-relative">
+              <div class="position-absolute top-0 end-0 pe-2 pt-2"> 
                 Civil
               </div>
               <h2 class="card-title">PostBox</h2>
@@ -233,8 +286,8 @@
       <div class="row">
         <div class="col-lg-8">
           <div class="card mb-4">
-            <div class="card-body position-relative"> <!-- Add position-relative here -->
-              <div class="position-absolute top-0 end-0 pe-2 pt-2"> <!-- Add your text here -->
+            <div class="card-body position-relative"> 
+              <div class="position-absolute top-0 end-0 pe-2 pt-2"> 
                 CSE
               </div>
               <h2 class="card-title">PostBox</h2>
@@ -253,7 +306,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </main>
   <!--Main layout-->
 

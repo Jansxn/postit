@@ -15,17 +15,12 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" />
 
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function () {
-      $('#download-btn').click(function (e) {
-        e.preventDefault(); // Prevent default link behavior
-        var pdfUrl = $('#pdf-preview').attr('src');
-        window.open(pdfUrl, '_blank'); // Open PDF in a new window for download
-      });
-       // Get the current URL path
+      // Get the current URL path and assign 'active' class
       var path = window.location.pathname;
-
       // Loop through each nav link
       $('#sidebarMenu .list-group-item').each(function() {
         var href = $(this).attr('href');
@@ -39,7 +34,7 @@
 
 
       // Handle form submission
-      $('.searchbar').submit(function(event) {
+      $('.searchform').submit(function(event) {
         // Prevent the default form submission behavior
         event.preventDefault();
   
@@ -54,6 +49,7 @@
       });
     });
   </script>
+
 
 
   <style>
@@ -143,25 +139,8 @@
     .custom-nav-side .list-group-item-action:not(.active):hover {
       color: black;
     }
-
-
-
-    .postbox-main {
-      margin-bottom: 30px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #ccc;
-    }
-
-    .postbox-head {
-      margin-bottom: 5px;
-      font-size: 2rem;
-      font-weight: 600;
-      text-decoration: underline;
-      text-transform:uppercase;
-    }
   </style>
 </head>
-
 
 <body>
   <!--Main Navigation-->
@@ -202,7 +181,7 @@
             loading="lazy" />
         </a>
         <!-- Search form -->
-        <form class="d-none d-md-flex input-group w-auto my-auto searchbar">
+        <form class="d-none d-md-flex input-group w-auto my-auto searchform">
           <input autocomplete="off" type="search" class="form-control rounded" placeholder="Enter PostBox"
             style="min-width: 225px" />
           <span class="input-group-text border-0"><i class="fas fa-search"></i></span>
@@ -234,112 +213,39 @@
   <main style="margin-top: 58px">
     <div class="container pt-4">
 
-      <div class="postbox-main">
-        <h1 class="postbox-head">{{postbox_name}} </h1>
-        <div class="postbox-description">
-          {{postbox_description}}
-        </div>
-      </div>
-
-      {% if has_verified_permission or user.is_superuser %}
-      <div class="row post-form">
-        <div class="col-lg-8">
-          <div class="card mb-4">
-            <div class="card-body">
-
-              <form method="POST" action="{% url 'createpost' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="hidden" name="page_name" value="{{ postbox_name }}">
-                <div class="form-group">
-                  <label for="post-title">Title</label>
-                  <input type="text" class="form-control" id="post-title" name="title" required>
+        <div class="container mt-5">
+            <h1>Welcome, {{ user.username }}</h1>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h3>Edit User Details</h3>
+                    <form action="{% url 'profile' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ user.first_name }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="usergroup" class="form-label">User Group</label>
+                            <input type="text" class="form-control" id="usergroup" name="usergroup" value="{{ user.groups.all.0.name }}" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                  <label for="post-content">Content</label>
-                  <textarea class="form-control" id="post-content" name="content" rows="3" required></textarea>
-                </div>
-                <div class="form-group">
-                  <label for="post-file">File</label>
-                  <input type="file" class="form-control" id="post-file" name="file">
-                </div>
-                <button type="submit" class="btn btn-primary">Post</button>
-              </form>
-
             </div>
-          </div>
         </div>
-      </div>
-      {% endif %}
 
-      {% for post in all %}
-        <div class="row">
-        <div class="col-lg-8">
-          <div class="card mb-4">
-            <div class="card-body position-relative">
-              <div class="position-absolute top-0 end-0 pe-2 pt-2">
-                {{ post.submission_page }}
-              </div>
-              <h2 class="card-title">{{ post.title }}</h2>
-              <h6 class="card-user">{{ post.user.username }}</h6>
-              <p class="card-text">
-                {{ post.content }}
-              </p>
-              <br />
-              <iframe id="pdf-preview" src="{{ MEDIA_URL }}{{ post.file.url }}" width="300" height="200" title=""></iframe> <br />
-              <a href="{{ MEDIA_URL }}{{ post.file.url }}" class="btn btn-primary" id="download-btn" target="_blank">Download Doc</a>
-            </div>
-          </div>
-        </div>
-      </div>
-        {% endfor %}
-
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="card mb-4">
-            <div class="card-body position-relative">
-              <div class="position-absolute top-0 end-0 pe-2 pt-2"> <!-- Add your text here -->
-                Civil
-              </div>
-              <h2 class="card-title">PostBox</h2>
-              <h6 class="card-user">Jason</h6>
-              <p class="card-text">
-                Welcome to PostBox! Here you can post your thoughts and
-                opinions on various topics. You can also read posts from other
-                users and comment on them. Enjoy!
-              </p>
-
-              {% load static %}
-              <iframe id="pdf-preview" src="{% static 'example.pdf' %}" width="300" height="200" title=""></iframe>
-              <br />
-              <a href="#" class="btn btn-primary" id="download-btn">Download Doc</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="card mb-4">
-            <div class="card-body position-relative"> <!-- Add position-relative here -->
-              <div class="position-absolute top-0 end-0 pe-2 pt-2"> <!-- Add your text here -->
-                CSE
-              </div>
-              <h2 class="card-title">PostBox</h2>
-              <h6 class="card-user">Himanshu</h6>
-              <p class="card-text">
-                Welcome to PostBox! Here you can post your thoughts and
-                opinions on various topics. You can also read posts from other
-                users and comment on them. Enjoy!
-              </p>
-
-              {% load static %}
-              <iframe id="pdf-preview" src="{% static 'example.pdf' %}" width="300" height="200" title=""></iframe>
-              <br />
-              <a href="#" class="btn btn-primary" id="download-btn">Download Doc</a>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </main>
   <!--Main layout-->
