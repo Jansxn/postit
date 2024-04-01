@@ -52,3 +52,25 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect("/")
+
+
+def profile(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            name = request.POST.get("name", None)
+            username = request.POST.get("username", None)
+            password = request.POST.get("password", None)
+            
+            user = request.user
+            user.first_name = name
+            if username:  # Check if username is provided
+                user.username = username
+            if password:
+                user.set_password(password)
+            user.save()
+            
+            return redirect("/")  # Redirect to home page or any other desired URL
+        else:
+            return render(request, "profile.html", {"user": request.user})
+    else:
+        return redirect("/login")
