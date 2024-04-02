@@ -29,7 +29,7 @@
       // Get the current URL path and assign 'active' class
       var path = window.location.pathname;
       // Loop through each nav link
-      $('#sidebarMenu .list-group-item').each(function() {
+      $('#sidebarMenu .list-group-item').each(function () {
         var href = $(this).attr('href');
 
         // Check if the href attribute matches the current URL path
@@ -41,16 +41,16 @@
 
 
       // Handle form submission
-      $('.searchbar').submit(function(event) {
+      $('.searchbar').submit(function (event) {
         // Prevent the default form submission behavior
         event.preventDefault();
-  
+
         // Get the entered postbox name
         var postboxName = $(this).find('input[type="search"]').val().toLowerCase().trim();
-  
+
         // Construct the URL based on the entered postbox name
         var url = "/" + postboxName;
-  
+
         // Navigate to the constructed URL
         window.location.href = url;
       });
@@ -147,17 +147,17 @@
       color: black;
     }
 
-    .navbar-brand img{
+    .navbar-brand img {
       height: 30px;
       width: auto;
     }
 
 
-    .card-postbox{
+    .card-postbox {
       text-transform: uppercase;
     }
 
-    .nav-postbox{
+    .nav-postbox {
       text-transform: uppercase;
     }
   </style>
@@ -170,12 +170,12 @@
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse custom-nav-side">
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
-        {%for postbox in postbox_list%}
-            <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
-              aria-current="true">
-              <span class="nav-postbox">{{ postbox }}</span>
-            </a>
-        {%endfor%}
+          {%for postbox in postbox_list%}
+          <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
+            aria-current="true">
+            <span class="nav-postbox">{{ postbox }}</span>
+          </a>
+          {%endfor%}
         </div>
       </div>
     </nav>
@@ -194,8 +194,7 @@
         <!-- Brand -->
         <a class="navbar-brand" href="{% url 'index' %}">
           {% load static %}
-          <img src="{% static 'image.png' %}" height="25" alt="MDB Logo"
-            loading="lazy" />
+          <img src="{% static 'postit-logo.png' %}" height="25" alt="Postit Logo" loading="lazy" />
         </a>
         <!-- Search form -->
         <form class="d-none d-md-flex input-group w-auto my-auto searchbar">
@@ -247,8 +246,8 @@
         </ol>
       </div> -->
 
-        {% for post in all %}
-        <div class="row">
+      {% for post in all %}
+      <div class="row">
         <div class="col-lg-8">
           <div class="card mb-4">
             <div class="card-body position-relative">
@@ -261,13 +260,15 @@
                 {{ post.content }}
               </p>
               <br />
-              <iframe id="pdf-preview" src="{{ MEDIA_URL }}{{ post.file.url }}" width="300" height="200" title=""></iframe> <br />
-              <a href="{{ MEDIA_URL }}{{ post.file.url }}" class="btn btn-primary" id="download-btn" target="_blank">Download Doc</a>
+              <iframe id="pdf-preview" src="{{ MEDIA_URL }}{{ post.file.url }}" width="300" height="200"
+                title=""></iframe> <br />
+              <a href="{{ MEDIA_URL }}{{ post.file.url }}" class="btn btn-primary" id="download-btn"
+                target="_blank">Download Doc</a>
             </div>
           </div>
         </div>
       </div>
-        {% endfor %}
+      {% endfor %}
   </main>
   <!--Main layout-->
 
