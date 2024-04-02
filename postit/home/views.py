@@ -14,6 +14,11 @@ def index(request):
 
 def postbox(request, postbox_name):
     postbox_description = "This is a postbox for " + postbox_name
+    try:
+        postbox = PostBox.objects.get(title=postbox_name)
+        postbox_description = postbox.content
+    except:
+        postbox_description = "This is a postbox for " + postbox_name
     # post = Post.objects.get(file_name=postbox_name)
     has_verified_permission = request.user.groups.filter(name='verified').exists()
     print(has_verified_permission)
