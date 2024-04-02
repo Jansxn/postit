@@ -6,21 +6,25 @@ from .forms import CreatePostForm
 def index(request):
     all_posts = Uploads.objects.all().order_by('-id')
     postbox_list = PostBox.objects.all()
+    has_verified_permission = request.user.groups.filter(name='verified').exists()
 
     context = {"all": all_posts,
-               "postbox_list": postbox_list}
+               "postbox_list": postbox_list,
+               "has_verified_permission": has_verified_permission}
 
     return render(request, "home.html", context)
 
 def postbox(request, postbox_name):
     postbox_description = "This is a postbox for " + postbox_name
+    showfrom = True
     try:
         postbox = PostBox.objects.get(title=postbox_name)
         postbox_description = postbox.content
         uploads = Uploads.objects.filter(submission_page=postbox)
     except PostBox.DoesNotExist:
-        postbox_description = "This is a postbox for " + postbox_name
+        postbox_description = "Please contact an admin or verified user to create the Postbox: " + postbox_name
         uploads = Uploads.objects.none()
+        showfrom = False
     has_verified_permission = request.user.groups.filter(name='verified').exists()
     print(has_verified_permission)
     postbox_list = PostBox.objects.all()
@@ -29,7 +33,8 @@ def postbox(request, postbox_name):
         "postbox_description": postbox_description,
         "has_verified_permission": has_verified_permission,
         "postbox_list": postbox_list,
-        "uploads": uploads
+        "uploads": uploads,
+        "showfrom": showfrom
     })
 
 
@@ -53,3 +58,15 @@ def createpost(request):
     else:
         rules = "Please make sure to follow the rules and guidlines"
         return render(request, "postbox.html", {"postbox_name": rules})
+    
+def createpostbox(request):
+    if request.method == "POST":
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        PostBox.objects.create(title=title, content=content)
+        return redirect('index')
+    else:
+        postbox_list = PostBox.objects.all()
+        has_verified_permission = request.user.groups.filter(name='verified').exists()
+        return render(request, "createpostbox.html", {"postbox_list": postbox_list,
+                                                      "has_verified_permission": has_verified_permission})
