@@ -144,6 +144,11 @@
       color: black;
     }
 
+    .navbar-brand img{
+      height: 30px;
+      width: auto;
+    }
+
 
 
     .postbox-main {
@@ -159,6 +164,14 @@
       text-decoration: underline;
       text-transform:uppercase;
     }
+
+    .card-postbox{
+      text-transform: uppercase;
+    }
+
+    .nav-postbox{
+      text-transform: uppercase;
+    }
   </style>
 </head>
 
@@ -170,18 +183,13 @@
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse custom-nav-side">
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
-          <a href="{% url 'postbox' postbox_name='cse' %}" class="list-group-item list-group-item-action py-2 ripple"
-            aria-current="true">
-            <span class="">CSE</span>
-          </a>
-          <a href="{% url 'postbox' postbox_name='electronics' %}"
-            class="list-group-item list-group-item-action py-2 ripple">
-            <span>Electronics</span>
-          </a>
-          <a href="{% url 'postbox' postbox_name='civil' %}" class="list-group-item list-group-item-action py-2 ripple">
-            <span>Civil</span>
-          </a>
-        </div>
+          {%for postbox in postbox_list%}
+              <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
+                aria-current="true">
+                <span class="nav-postbox">{{ postbox }}</span>
+              </a>
+          {%endfor%}
+          </div>
       </div>
     </nav>
     <!-- Sidebar -->
@@ -197,8 +205,9 @@
         </button>
 
         <!-- Brand -->
-        <a class="navbar-brand" href="#">
-          <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="25" alt="MDB Logo"
+        <a class="navbar-brand" href="{% url 'index' %}">
+          {% load static %}
+          <img src="{% static 'image.png' %}" height="25" alt="MDB Logo"
             loading="lazy" />
         </a>
         <!-- Search form -->
@@ -271,7 +280,7 @@
       </div>
       {% endif %}
 
-      {% for post in all %}
+      {% for post in uploads %}
         <div class="row">
         <div class="col-lg-8">
           <div class="card mb-4">
@@ -293,11 +302,15 @@
       </div>
         {% endfor %}
 
-      <div class="row">
+
+
+
+      <!-- Template -->
+      <!-- <div class="row">
         <div class="col-lg-8">
           <div class="card mb-4">
             <div class="card-body position-relative">
-              <div class="position-absolute top-0 end-0 pe-2 pt-2"> <!-- Add your text here -->
+              <div class="position-absolute top-0 end-0 pe-2 pt-2"> 
                 Civil
               </div>
               <h2 class="card-title">PostBox</h2>
@@ -320,8 +333,8 @@
       <div class="row">
         <div class="col-lg-8">
           <div class="card mb-4">
-            <div class="card-body position-relative"> <!-- Add position-relative here -->
-              <div class="position-absolute top-0 end-0 pe-2 pt-2"> <!-- Add your text here -->
+            <div class="card-body position-relative"> 
+              <div class="position-absolute top-0 end-0 pe-2 pt-2">
                 CSE
               </div>
               <h2 class="card-title">PostBox</h2>
@@ -341,7 +354,7 @@
         </div>
       </div>
     </div>
-  </main>
+  </main> -->
   <!--Main layout-->
 
 
