@@ -3,6 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib import messages, auth
 
 from . models import Member
+from home.models import PostBox
 
 def signup(request):
     if request.method == "POST":
@@ -75,6 +76,8 @@ def profile(request):
             
             return redirect("/")  # Redirect to home page or any other desired URL
         else:
-            return render(request, "profile.html", {"user": request.user})
+            postbox_list = PostBox.objects.all()
+            return render(request, "profile.html", {"user": request.user,
+                                                    "postbox_list": postbox_list})
     else:
         return redirect("/login")

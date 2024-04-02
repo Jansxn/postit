@@ -146,6 +146,20 @@
     .custom-nav-side .list-group-item-action:not(.active):hover {
       color: black;
     }
+
+    .navbar-brand img{
+      height: 30px;
+      width: auto;
+    }
+
+
+    .card-postbox{
+      text-transform: uppercase;
+    }
+
+    .nav-postbox{
+      text-transform: uppercase;
+    }
   </style>
 </head>
 
@@ -156,17 +170,12 @@
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse custom-nav-side">
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
-          <a href="{% url 'postbox' postbox_name='cse' %}" class="list-group-item list-group-item-action py-2 ripple"
-            aria-current="true">
-            <span class="">CSE</span>
-          </a>
-          <a href="{% url 'postbox' postbox_name='electronics' %}"
-            class="list-group-item list-group-item-action py-2 ripple">
-            <span>Electronics</span>
-          </a>
-          <a href="{% url 'postbox' postbox_name='civil' %}" class="list-group-item list-group-item-action py-2 ripple">
-            <span>Civil</span>
-          </a>
+        {%for postbox in postbox_list%}
+            <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
+              aria-current="true">
+              <span class="nav-postbox">{{ postbox }}</span>
+            </a>
+        {%endfor%}
         </div>
       </div>
     </nav>
@@ -183,8 +192,9 @@
         </button>
 
         <!-- Brand -->
-        <a class="navbar-brand" href="#">
-          <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="25" alt="MDB Logo"
+        <a class="navbar-brand" href="{% url 'index' %}">
+          {% load static %}
+          <img src="{% static 'image.png' %}" height="25" alt="MDB Logo"
             loading="lazy" />
         </a>
         <!-- Search form -->
@@ -242,7 +252,7 @@
         <div class="col-lg-8">
           <div class="card mb-4">
             <div class="card-body position-relative">
-              <div class="position-absolute top-0 end-0 pe-2 pt-2">
+              <div class="position-absolute top-0 end-0 pe-2 pt-2 card-postbox">
                 {{ post.submission_page }}
               </div>
               <h2 class="card-title">{{ post.title }}</h2>
@@ -258,60 +268,8 @@
         </div>
       </div>
         {% endfor %}
-<!-- 
-
-        <div class="col-lg-8">
-          <div class="card mb-4">
-            <div class="card-body position-relative">
-              <div class="position-absolute top-0 end-0 pe-2 pt-2"> 
-                Civil
-              </div>
-              <h2 class="card-title">PostBox</h2>
-              <h6 class="card-user">Jason</h6>
-              <p class="card-text">
-                Welcome to PostBox! Here you can post your thoughts and
-                opinions on various topics. You can also read posts from other
-                users and comment on them. Enjoy!
-              </p>
-
-              {% load static %}
-              <iframe id="pdf-preview" src="{% static 'example.pdf' %}" width="300" height="200" title=""></iframe>
-              <br />
-              <a href="#" class="btn btn-primary" id="download-btn">Download Doc</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="card mb-4">
-            <div class="card-body position-relative"> 
-              <div class="position-absolute top-0 end-0 pe-2 pt-2"> 
-                CSE
-              </div>
-              <h2 class="card-title">PostBox</h2>
-              <h6 class="card-user">Himanshu</h6>
-              <p class="card-text">
-                Welcome to PostBox! Here you can post your thoughts and
-                opinions on various topics. You can also read posts from other
-                users and comment on them. Enjoy!
-              </p>
-
-              {% load static %}
-              <iframe id="pdf-preview" src="{% static 'example.pdf' %}" width="300" height="200" title=""></iframe>
-              <br />
-              <a href="#" class="btn btn-primary" id="download-btn">Download Doc</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </main>
   <!--Main layout-->
-
-
-
 
 
 
