@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>News Letter Home</title>
+  <title>PostIT</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
   <!-- Font Awesome -->
@@ -160,6 +160,28 @@
     .nav-postbox {
       text-transform: uppercase;
     }
+
+    .createpostbox {
+      background-color: #007bff;  /* Bootstrap primary color */
+      color: white;  /* Text color */
+      border-radius: 10px;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      transition: 0.5s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .createpostbox:hover {
+        background-color: #0056b3;  /* Darken the background color on hover */
+        color: white;  /* Keep the text color white on hover */
+    }
+
+    .fa-circle-plus {
+      font-size: 20px;
+      margin-right: 10px;
+    }
   </style>
 </head>
 
@@ -170,12 +192,15 @@
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse custom-nav-side">
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
-          {%for postbox in postbox_list%}
-          <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
-            aria-current="true">
-            <span class="nav-postbox">{{ postbox }}</span>
-          </a>
-          {%endfor%}
+          {% if has_verified_permission or user.is_superuser %}
+          <a href="{% url 'createpostbox'%}" class="createpostbox"> <i class="fa-solid fa-circle-plus"></i>Create PostBox </a>
+          {% endif %}
+        {%for postbox in postbox_list%}
+            <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
+              aria-current="true">
+              <span class="nav-postbox">{{ postbox }}</span>
+            </a>
+        {%endfor%}
         </div>
       </div>
     </nav>
@@ -229,25 +254,8 @@
   <main style="margin-top: 58px">
     <div class="container pt-4">
 
-      <!-- <div>
-         <h1>This is home.html</h1>
-        <ol>
-          {% if not all %}
-          <h1>No posts yet!</h1>
-          <p>Come back later :)</p>
-          {% else %}
-          {% for post in all %}
-          <li>{{ post.title }} | {{ post.user.username }} | {{ post.submission_page }}</li>
-          <a href="{{ MEDIA_URL }}{{ post.file.url }}">{{ post.file.name }}</a>
-          <iframe id="pdf-preview" src="{{ MEDIA_URL }}{{ item.file.url }}" width="300" height="200"
-          < title=""></iframe>
-          {% endfor %}
-          {% endif %}
-        </ol>
-      </div> -->
-
-      {% for post in all %}
-      <div class="row">
+        {% for post in all %}
+        <div class="row">
         <div class="col-lg-8">
           <div class="card mb-4">
             <div class="card-body position-relative">

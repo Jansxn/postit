@@ -19,6 +19,13 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function () {
+      // Open PDF in a new window for download
+      $('#download-btn').click(function (e) {
+        e.preventDefault(); // Prevent default link behavior
+        var pdfUrl = $('#pdf-preview').attr('src');
+        window.open(pdfUrl, '_blank'); // Open PDF in a new window for download
+      });
+
       // Get the current URL path and assign 'active' class
       var path = window.location.pathname;
       // Loop through each nav link
@@ -34,7 +41,7 @@
 
 
       // Handle form submission
-      $('.searchform').submit(function(event) {
+      $('.searchbar').submit(function(event) {
         // Prevent the default form submission behavior
         event.preventDefault();
   
@@ -120,11 +127,6 @@
       text-decoration: underline;
     }
 
-    .navbar-brand img{
-      height: 30px;
-      width: auto;
-    }
-
 
     .custom-nav-main {
       background-color: rgb(199, 217, 233, 0.3);
@@ -144,6 +146,12 @@
     .custom-nav-side .list-group-item-action:not(.active):hover {
       color: black;
     }
+
+    .navbar-brand img{
+      height: 30px;
+      width: auto;
+    }
+
 
     .card-postbox{
       text-transform: uppercase;
@@ -244,47 +252,43 @@
 
   <!--Main layout-->
   <main style="margin-top: 58px">
-    <div class="container pt-4">
 
-        <div class="container mt-5">
-            <h1>Welcome, {{ user.username }}</h1>
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <h3>Edit User Details</h3>
-                    <form action="{% url 'profile' %}" method="post">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" value="{{ user.first_name }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="usergroup" class="form-label">User Group</label>
-                            <input type="text" class="form-control" id="usergroup" name="usergroup" value="{{ user.groups.all.0.name }}" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </form>
-                </div>
+    <div class="container mt-5">
+        <h1>Create PostBox</h1>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Content</label>
+                        <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
         </div>
-
     </div>
+    <!-- <div class="container pt-4">
+        <h1>Create PostBox</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div> -->
   </main>
   <!--Main layout-->
-
-
-
 
 
 

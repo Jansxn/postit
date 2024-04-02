@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>News Letter Home</title>
+  <title>PostIT: {{postbox_name|upper}}</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
   <!-- Font Awesome -->
@@ -172,6 +172,28 @@
     .nav-postbox{
       text-transform: uppercase;
     }
+
+    .createpostbox {
+      background-color: #007bff;  /* Bootstrap primary color */
+      color: white;  /* Text color */
+      border-radius: 10px;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      transition: 0.5s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .createpostbox:hover {
+        background-color: #0056b3;  /* Darken the background color on hover */
+        color: white;  /* Keep the text color white on hover */
+    }
+
+    .fa-circle-plus {
+      font-size: 20px;
+      margin-right: 10px;
+    }
   </style>
 </head>
 
@@ -183,13 +205,16 @@
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse custom-nav-side">
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
-          {%for postbox in postbox_list%}
-              <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
-                aria-current="true">
-                <span class="nav-postbox">{{ postbox }}</span>
-              </a>
-          {%endfor%}
-          </div>
+          {% if has_verified_permission or user.is_superuser %}
+          <a href="{% url 'createpostbox'%}" class="createpostbox"> <i class="fa-solid fa-circle-plus"></i>Create PostBox </a>
+          {% endif %}
+        {%for postbox in postbox_list%}
+            <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
+              aria-current="true">
+              <span class="nav-postbox">{{ postbox }}</span>
+            </a>
+        {%endfor%}
+        </div>
       </div>
     </nav>
     <!-- Sidebar -->
@@ -207,8 +232,7 @@
         <!-- Brand -->
         <a class="navbar-brand" href="{% url 'index' %}">
           {% load static %}
-          <img src="{% static 'image.png' %}" height="25" alt="MDB Logo"
-            loading="lazy" />
+          <img src="{% static 'postit-logo.png' %}" height="25" alt="Postit Logo" loading="lazy" />
         </a>
         <!-- Search form -->
         <form class="d-none d-md-flex input-group w-auto my-auto searchbar">
@@ -250,7 +274,8 @@
         </div>
       </div>
 
-      {% if has_verified_permission or user.is_superuser %}
+    {% if showfrom %}
+    {% if has_verified_permission or user.is_superuser %}
       <div class="row post-form">
         <div class="col-lg-8">
           <div class="card mb-4">
@@ -279,9 +304,10 @@
         </div>
       </div>
       {% endif %}
+      {% endif %}
 
       {% for post in uploads %}
-        <div class="row">
+      <div class="row">
         <div class="col-lg-8">
           <div class="card mb-4">
             <div class="card-body position-relative">
@@ -300,7 +326,7 @@
           </div>
         </div>
       </div>
-        {% endfor %}
+      {% endfor %}
 
 
 

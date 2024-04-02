@@ -126,9 +126,9 @@
         <header class = "nav">
             <nav>
                 <ul class="nav-links href-links">
-                    <li><a href="#">CS</a></li>
-                    <li><a href="#">Electronics</a></li>
-                    <li><a href="#">Civil</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/cse">CS</a></li>
+                    <li><a href="/electronics">Electronics</a></li>
                 </ul>
                 <ul class = "nav-links user-links">
                     {%if user.is_authenticated %}
@@ -147,7 +147,7 @@
         <div class="signup-container">
             <div class="image-container">
                 {% load static %}
-                <img src="{% static 'sign.png' %}" alt="Signup" />
+                <img src="{% static 'postit-logo.png' %}" alt="Postit Logo" loading="lazy" />
             </div>
             <div class="signup-form">
                 <h2 class="head">Hello, Friend</h2>

@@ -76,8 +76,10 @@ def profile(request):
             
             return redirect("/")  # Redirect to home page or any other desired URL
         else:
+            has_verified_permission = request.user.groups.filter(name='verified').exists()
             postbox_list = PostBox.objects.all()
             return render(request, "profile.html", {"user": request.user,
-                                                    "postbox_list": postbox_list})
+                                                    "postbox_list": postbox_list,
+                                                    "has_verified_permission": has_verified_permission})
     else:
         return redirect("/login")
