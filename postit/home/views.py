@@ -17,9 +17,10 @@ def postbox(request, postbox_name):
     try:
         postbox = PostBox.objects.get(title=postbox_name)
         postbox_description = postbox.content
-    except:
+        uploads = Uploads.objects.filter(submission_page=postbox)
+    except PostBox.DoesNotExist:
         postbox_description = "This is a postbox for " + postbox_name
-    # post = Post.objects.get(file_name=postbox_name)
+        uploads = Uploads.objects.none()
     has_verified_permission = request.user.groups.filter(name='verified').exists()
     print(has_verified_permission)
     postbox_list = PostBox.objects.all()
@@ -27,7 +28,8 @@ def postbox(request, postbox_name):
         "postbox_name": postbox_name,
         "postbox_description": postbox_description,
         "has_verified_permission": has_verified_permission,
-        "postbox_list": postbox_list
+        "postbox_list": postbox_list,
+        "uploads": uploads
     })
 
 
