@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>News Letter Home</title>
+  <title>PostIT: {{postbox_name|upper}}</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
   <!-- Font Awesome -->
@@ -232,8 +232,7 @@
         <!-- Brand -->
         <a class="navbar-brand" href="{% url 'index' %}">
           {% load static %}
-          <img src="{% static 'image.png' %}" height="25" alt="MDB Logo"
-            loading="lazy" />
+          <img src="{% static 'postit-logo.png' %}" height="25" alt="Postit Logo" loading="lazy" />
         </a>
         <!-- Search form -->
         <form class="d-none d-md-flex input-group w-auto my-auto searchbar">
