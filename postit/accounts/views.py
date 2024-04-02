@@ -23,7 +23,7 @@ def signup(request):
         account.save()
         
         group = Group.objects.get(name="viewer")
-        user.groups.add(group)
+        account.groups.add(group)
         print("User Created")
         
         return redirect("/login")   
