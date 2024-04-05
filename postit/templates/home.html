@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PostIT</title>
   {% load static %}
-  <link rel="icon" type="image/png" href="{% static 'postit-logo.png' %}"/>
+  <link rel="icon" type="image/png" href="{% static 'postit-logo.png' %}" />
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
   <!-- Font Awesome -->
@@ -65,6 +65,32 @@
     body {
       font-family: "Nunito", sans-serif;
       background-color: rgb(229, 232, 240);
+    }
+
+    body.dark-mode {
+      background-color: #121212;
+      /* Material dark background */
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .card {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .card a,
+    body.dark-mode .nav-item a {
+      color: #F6B17A;
+    }
+
+    body.dark-mode .fas {
+      color: #ffab40;
+    }
+
+    body.dark-mode .btn-primary {
+      background-color: #1B1A55;
+      border-color: #9290C3;
+      color: #F6B17A;
     }
 
     @media (min-width: 991.98px) {
@@ -164,8 +190,10 @@
     }
 
     .createpostbox {
-      background-color: #007bff;  /* Bootstrap primary color */
-      color: white;  /* Text color */
+      background-color: #007bff;
+      /* Bootstrap primary color */
+      color: white;
+      /* Text color */
       border-radius: 10px;
       padding: 10px 20px;
       margin-bottom: 20px;
@@ -175,9 +203,12 @@
       justify-content: center;
       align-items: center;
     }
+
     .createpostbox:hover {
-        background-color: #0056b3;  /* Darken the background color on hover */
-        color: white;  /* Keep the text color white on hover */
+      background-color: #0056b3;
+      /* Darken the background color on hover */
+      color: white;
+      /* Keep the text color white on hover */
     }
 
     .fa-circle-plus {
@@ -185,13 +216,13 @@
       margin-right: 10px;
     }
 
-    .nav-postboxhead-container{
+    .nav-postboxhead-container {
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .nav-postboxhead{
+    .nav-postboxhead {
       font-size: 20px;
       font-weight: bold;
       margin-bottom: 10px;
@@ -202,7 +233,7 @@
   </style>
 </head>
 
-<body>
+<body data-bs-theme="dark">
   <!--Main Navigation-->
   <header>
     <!-- Sidebar -->
@@ -210,7 +241,8 @@
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
           {% if has_verified_permission or user.is_superuser %}
-          <a href="{% url 'createpostbox'%}" class="createpostbox"> <i class="fa-solid fa-circle-plus"></i>Create PostBox </a>
+          <a href="{% url 'createpostbox'%}" class="createpostbox"> <i class="fa-solid fa-circle-plus"></i>Create
+            PostBox </a>
           {% endif %}
           {% if user.is_authenticated %}
           <div class="mb-4">
@@ -218,10 +250,10 @@
               <span class="nav-postboxhead">Subscribed PostBoxes</span>
             </div>
             {%for postbox in subscribed_postbox_list%}
-              <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
-                aria-current="true">
-                <span class="nav-postbox">{{ postbox }}</span>
-              </a>
+            <a href="{% url 'postbox' postbox_name=postbox %}"
+              class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+              <span class="nav-postbox">{{ postbox }}</span>
+            </a>
             {%endfor%}
           </div>
           {% endif %}
@@ -229,10 +261,10 @@
             <span class="nav-postboxhead">All PostBoxes</span>
           </div>
           {%for postbox in postbox_list%}
-              <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
-                aria-current="true">
-                <span class="nav-postbox">{{ postbox }}</span>
-              </a>
+          <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
+            aria-current="true">
+            <span class="nav-postbox">{{ postbox }}</span>
+          </a>
           {%endfor%}
         </div>
       </div>
@@ -263,6 +295,12 @@
 
         <!-- Right links -->
         <ul class="navbar-nav ms-auto d-flex flex-row">
+          <li>
+            <div class="form-check form-switch mx-2">
+              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                onclick="myToggle()">
+            </div>
+          </li>
           <!-- Notification dropdown -->
           {%if user.is_authenticated %}
           <li class="nav-item"><a href="/profile">View Profile</a></li>
@@ -287,8 +325,8 @@
   <main style="margin-top: 58px">
     <div class="container pt-4">
 
-        {% for post in all %}
-        <div class="row">
+      {% for post in all %}
+      <div class="row">
         <div class="col-lg-8">
           <div class="card mb-4">
             <div class="card-body position-relative">
@@ -314,6 +352,16 @@
   <!--Main layout-->
 
 
+  <script>
+    function myToggle() {
+      var element = document.body;
+      if (element.classList.contains('dark-mode')) {
+        element.classList.remove('dark-mode');
+      } else {
+        element.classList.add('dark-mode');
+      }
+    }
+  </script>
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
