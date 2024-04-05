@@ -152,6 +152,44 @@
     .nav-postbox{
       text-transform: uppercase;
     }
+
+    .createpostbox {
+      background-color: #007bff;  /* Bootstrap primary color */
+      color: white;  /* Text color */
+      border-radius: 10px;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      transition: 0.5s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .createpostbox:hover {
+        background-color: #0056b3;  /* Darken the background color on hover */
+        color: white;  /* Keep the text color white on hover */
+    }
+
+    .fa-circle-plus {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+
+
+    .nav-postboxhead-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .nav-postboxhead{
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-decoration: underline;
+      text-align: center;
+      width: 100%;
+    }
   </style>
 </head>
 
@@ -162,13 +200,30 @@
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse custom-nav-side">
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
+          {% if has_verified_permission or user.is_superuser %}
+          <a href="{% url 'createpostbox'%}" class="createpostbox"> <i class="fa-solid fa-circle-plus"></i>Create PostBox </a>
+          {% endif %}
+          {% if user.is_authenticated %}
+          <div class="nav-postboxhead-container" aria-current="true">
+            <span class="nav-postboxhead">Subscribed PostBoxes</span>
+          </div>
+          {%for postbox in subscribed_postbox_list%}
+              <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
+                aria-current="true">
+                <span class="nav-postbox">{{ postbox }}</span>
+              </a>
+          {%endfor%}
+          {% endif %}
+          <div class="nav-postboxhead-container mt-4" aria-current="true">
+            <span class="nav-postboxhead">All PostBoxes</span>
+          </div>
           {%for postbox in postbox_list%}
               <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
                 aria-current="true">
                 <span class="nav-postbox">{{ postbox }}</span>
               </a>
           {%endfor%}
-          </div>
+        </div>
       </div>
     </nav>
     <!-- Sidebar -->
@@ -186,11 +241,10 @@
         <!-- Brand -->
         <a class="navbar-brand" href="{% url 'index' %}">
           {% load static %}
-          <img src="{% static 'image.png' %}" height="25" alt="MDB Logo"
-            loading="lazy" />
+          <img src="{% static 'postit-logo.png' %}" height="25" alt="Postit Logo" loading="lazy" />
         </a>
         <!-- Search form -->
-        <form class="d-none d-md-flex input-group w-auto my-auto searchform">
+        <form class="d-none d-md-flex input-group w-auto my-auto searchbar">
           <input autocomplete="off" type="search" class="form-control rounded" placeholder="Enter PostBox"
             style="min-width: 225px" />
           <span class="input-group-text border-0"><i class="fas fa-search"></i></span>
@@ -212,7 +266,6 @@
     </nav>
     <!-- Navbar -->
   </header>
-  <!--Main Navigation-->
 
 
 

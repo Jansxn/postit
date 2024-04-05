@@ -18,3 +18,13 @@ class PostBox(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Subscription(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    postbox = models.ForeignKey(PostBox, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'postbox')
+
+    def __str__(self):
+        return f'{self.user.username} subscribed to {self.postbox.title}'

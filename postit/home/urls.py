@@ -8,5 +8,7 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("createpost", views.createpost, name="createpost"),
     path("<str:postbox_name>/", views.postbox, name='postbox'),
+    path("createpostbox", views.createpostbox, name="createpostbox"),
+    path("subscribe/<str:postbox_name>", views.subscribe, name="subscribe"),
     # re_path(r'^(?!create$|login$|signup$|logout$|admin$)([a-zA-Z0-9_]+)/$', views.postbox, name='postbox'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

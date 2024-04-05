@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib import messages, auth
 
 from . models import Member
-from home.models import PostBox
+from home.models import PostBox, Subscription
 
 def signup(request):
     if request.method == "POST":
@@ -23,7 +23,7 @@ def signup(request):
         account.save()
         
         group = Group.objects.get(name="viewer")
-        user.groups.add(group)
+        account.groups.add(group)
         print("User Created")
         
         return redirect("/login")   
@@ -76,8 +76,13 @@ def profile(request):
             
             return redirect("/")  # Redirect to home page or any other desired URL
         else:
+            has_verified_permission = request.user.groups.filter(name='verified').exists()
+            subscribed_postbox_list = Subscription.objects.filter(user=request.user).values_list('postbox__title', flat=True)
             postbox_list = PostBox.objects.all()
             return render(request, "profile.html", {"user": request.user,
-                                                    "postbox_list": postbox_list})
+                                                    "postbox_list": postbox_list,
+                                                    "has_verified_permission": has_verified_permission,
+                                                    "subscribed_postbox_list": subscribed_postbox_list
+                                                    })
     else:
         return redirect("/login")
