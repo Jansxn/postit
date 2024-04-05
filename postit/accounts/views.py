@@ -77,7 +77,11 @@ def profile(request):
             return redirect("/")  # Redirect to home page or any other desired URL
         else:
             has_verified_permission = request.user.groups.filter(name='verified').exists()
-            subscribed_postbox_list = Subscription.objects.filter(user=request.user).values_list('postbox__title', flat=True)
+            subscribed_postbox_list = []
+            if request.user.is_authenticated:
+                subscribed_postbox_list = Subscription.objects.filter(user=request.user).values_list('postbox__title', flat=True)
+            else:
+                subscribed_postbox_list = []
             postbox_list = PostBox.objects.all()
             return render(request, "profile.html", {"user": request.user,
                                                     "postbox_list": postbox_list,
