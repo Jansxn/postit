@@ -6,7 +6,10 @@ from .forms import CreatePostForm
 def index(request):
     all_posts = Uploads.objects.all().order_by('-id')
     postbox_list = PostBox.objects.all()
-    subscribed_postbox_list = Subscription.objects.filter(user=request.user).values_list('postbox__title', flat=True)
+    if request.user.is_authenticated:
+        subscribed_postbox_list = Subscription.objects.filter(user=request.user).values_list('postbox__title', flat=True)
+    else:
+        subscribed_postbox_list = []
     has_verified_permission = request.user.groups.filter(name='verified').exists()
     context = {"all": all_posts,
                "postbox_list": postbox_list,
@@ -17,7 +20,10 @@ def index(request):
 
 def postbox(request, postbox_name):
     postbox_description = "This is a postbox for " + postbox_name
-    subscribed_postbox_list = Subscription.objects.filter(user=request.user).values_list('postbox__title', flat=True)
+    if request.user.is_authenticated:
+        subscribed_postbox_list = Subscription.objects.filter(user=request.user).values_list('postbox__title', flat=True)
+    else:
+        subscribed_postbox_list = []
     showfrom = True
     try:
         postbox = PostBox.objects.get(title=postbox_name)
@@ -71,7 +77,10 @@ def createpostbox(request):
     else:
         postbox_list = PostBox.objects.all()
         has_verified_permission = request.user.groups.filter(name='verified').exists()
-        subscribed_postbox_list = Subscription.objects.filter(user=request.user).values_list('postbox__title', flat=True)
+        if request.user.is_authenticated:
+            subscribed_postbox_list = Subscription.objects.filter(user=request.user).values_list('postbox__title', flat=True)
+        else:
+            subscribed_postbox_list = []
         return render(request, "createpostbox.html", {"postbox_list": postbox_list,
                                                       "has_verified_permission": has_verified_permission,
                                                       "subscribed_postbox_list": subscribed_postbox_list
