@@ -1,194 +1,251 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Login Page</title>
-        <!-- Bootstrap CSS -->
-        <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        />
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'navbar.css' %}" />
-        {% load static %}
-        <link rel="icon" type="image/png" href="{% static 'postit-logo.png' %}"/>
-        <style>
 
-            body {
-                background-color: rgb(229, 232, 240);
-                font-family: 'Nunito', sans-serif;
-            }
-    
-            /* Signup form styling */
-            .main-container {
-                background-size: cover;
-                background-position: center;
-                height: 100vh;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-    
-            .login-container {
-                border: 3px solid rgba(255, 255, 255, 0.8);
-                background-color: rgb(244, 244, 253, 0.5);
-                height: 95%;
-                width: 95%;
-                padding: 10px;
-                border-radius: 20px;
-                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-                display: flex;
-                align-items: center;
-                justify-content: space-around;
-                flex-direction: row-reverse;
-            }
-    
-            .image-container {
-                width: 40%;
-                height: 90%;
-                border-radius: 20px;
-                overflow: hidden;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-    
-            .image-container img {
-                width: 100%;
-                object-fit: cover;
-            }
-    
-            .login-form {
-                max-width: 60%;
-                padding: 60px;
-                width: 500px;
-            }
-    
-            .login-form h2 {
-                text-align: center;
-            }
-    
-            .head {
-                font-weight: 600;
-            }
-    
-            .sub-head {
-                font-weight: 400;
-                color: #beb7b7;
-                font-size: 1rem;
-                margin-bottom: 30px;
-                text-align: center;
-            }
-    
-            .login-form input[type="text"],
-            .login-form input[type="password"],
-            .login-form input[type="email"] {
-                width: 100%;
-                padding: 25px;
-                margin-bottom: 20px;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                box-sizing: border-box;
-                font-size: 16px;
-            }
-    
-            .login-form input::placeholder {
-                color: #aaa;
-            }
-    
-            .button {
-                margin-top: 10px;
-                color: white;
-                padding: 15px;
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                font-size: 16px;
-                width: 100%;
-            }
-    
-            .login-form a {
-                color: #5bc0de;
-                /* Blue color for links */
-                text-decoration: none;
-                display: block;
-                text-align: center;
-                margin-top: 20px;
-                font-size: 16px;
-            }
-    
-            .login-form a:hover {
-                text-decoration: underline;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- Navbar -->
-        <div class="navbar">
-            <header class = "nav">
-                <nav>
-                    <ul class="nav-links href-links">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/cse">CS</a></li>
-                        <li><a href="/electronics">Electronics</a></li>
-                    </ul>
-                    <ul class = "nav-links user-links">
-                        {%if user.is_authenticated %}
-                            <li><a href="/logout">Log Out</a></li>
-                        {%else%}
-                            <li><a href="/signup">Sign Up</a></li>
-                            <li><a href="/login">Log In</a></li>
-                        {%endif%}
-                    </ul>
-                </nav>
-            </header>
-        </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{% static 'navbar.css' %}" />
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'postit-logo.png' %}" />
+    <style>
+        body {
+            background-color: teal;
+            font-family: 'Nunito', sans-serif;
+        }
 
-        <!-- Login form -->
-        <div class="main-container">
-            <div class="login-container">
-                <div class="image-container">
-                    {% load static %}
-                    <img src="{% static 'postit-logo.png' %}" alt="Postit Logo" loading="lazy" />
-                </div>
-                <div class="login-form">
-                    <h2 class="head">Welcome Back!</h2>
-                    <h3 class="sub-head">Are you ready to get Posting?!</h3>
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Username"
-                                name = "user"
-                                required
-                            />
-                        </div>
-                        <div class="form-group">
-                            <input
-                                type="password"
-                                class="form-control"
-                                placeholder="Password"
-                                name = "pass"
-                                required
-                            />
-                        </div>
-                        <button type="submit" class="btn btn-info button">
-                            {% if messages %}
-                                {% for message in messages %}
-                                    {{message}}
-                                {% endfor %}
-                                Try Again
-                            {% else %}
-                            Login
-                            {% endif %}
-                        </button>
-                        <a href="/signup">Dont have an account? Signup</a>
-                    </form>
-                    <!-- Social login buttons -->
-                    <!-- <div class="social-buttons">
+        /* Signup form styling */
+        .main-container {
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            background-color: rgb(244, 244, 253, 0.5);
+            height: 95%;
+            width: 95%;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: row-reverse;
+            background-image: url("{% static 'animate/background.png' %}");
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-container {
+            width: 40%;
+            height: 90%;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .login-form {
+            max-width: 60%;
+            padding: 60px;
+            width: 500px;
+        }
+
+        .login-form h2 {
+            text-align: center;
+        }
+
+        .head {
+            font-weight: 600;
+        }
+
+        .sub-head {
+            font-weight: 400;
+            color: #beb7b7;
+            font-size: 1rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"],
+        .login-form input[type="email"] {
+            width: 100%;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .login-form input::placeholder {
+            color: #aaa;
+        }
+
+        .button {
+            margin-top: 10px;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .login-form a {
+            color: #5bc0de;
+            /* Blue color for links */
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .login-form a:hover {
+            text-decoration: underline;
+        }
+
+        .bubbles img {
+            width: 50px;
+            animation: bubble 7s linear infinite;
+        }
+
+        .bubbles {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            position: absolute;
+            bottom: -70px;
+        }
+
+        @keyframes bubble {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            70% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-80vh);
+                opacity: 0;
+            }
+        }
+
+        .bubbles img:nth-child(1) {
+            animation-delay: 2s;
+            width: 25px;
+        }
+
+        .bubbles img:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        .bubbles img:nth-child(3) {
+            animation-delay: 3s;
+            width: 25px;
+        }
+
+        .bubbles img:nth-child(4) {
+            animation-delay: 4.5s;
+        }
+
+        .bubbles img:nth-child(5) {
+            animation-delay: 3s;
+        }
+
+        .bubbles img:nth-child(6) {
+            animation-delay: 6s;
+            width: 20px;
+        }
+
+        .bubbles img:nth-child(7) {
+            animation-delay: 7s;
+            width: 35px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <header class="nav">
+            <nav>
+                <ul class="nav-links href-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/cse">CS</a></li>
+                    <li><a href="/electronics">Electronics</a></li>
+                </ul>
+                <ul class="nav-links user-links">
+                    {%if user.is_authenticated %}
+                    <li><a href="/logout">Log Out</a></li>
+                    {%else%}
+                    <li><a href="/signup">Sign Up</a></li>
+                    <li><a href="/login">Log In</a></li>
+                    {%endif%}
+                </ul>
+            </nav>
+        </header>
+    </div>
+
+    <!-- Login form -->
+    <div class="main-container">
+        <div class="login-container">
+            <div class="image-container">
+                {% load static %}
+                <img src="{% static 'postit-logo.png' %}" alt="Postit Logo" loading="lazy" />
+            </div>
+            <div class="login-form">
+                <h2 class="head">Welcome Back!</h2>
+                <h3 class="sub-head">Are you ready to get Posting?!</h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Username" name="user" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password" name="pass" required />
+                    </div>
+                    <button type="submit" class="btn btn-info button">
+                        {% if messages %}
+                        {% for message in messages %}
+                        {{message}}
+                        {% endfor %}
+                        Try Again
+                        {% else %}
+                        Login
+                        {% endif %}
+                    </button>
+                    <a href="/signup">Dont have an account? Signup</a>
+                </form>
+                <!-- Social login buttons -->
+                <!-- <div class="social-buttons">
                         <button class="btn btn-primary social-button google-button">
                             Login with Google
                         </button>
@@ -201,12 +258,22 @@
                             Login with Apple
                         </button>
                     </div> -->
-                </div>
+            </div>
+            <div class="bubbles">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
             </div>
         </div>
-        <!-- Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    </body>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
 </html>
