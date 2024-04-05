@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -5,17 +6,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up Page</title>
-    {% load static %}
-    <link rel="icon" type="image/png" href="{% static 'postit-logo.png' %}"/>
+    <link rel="icon" type="image/png" href="{% static 'postit-logo.png' %}" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
     {% load static %}
     <link rel="stylesheet" href="{% static 'navbar.css' %}" />
     <style>
-
         body {
-            background-color: rgb(229, 232, 240);
+            background-color: teal;
             font-family: 'Nunito', sans-serif;
         }
 
@@ -40,6 +39,11 @@
             display: flex;
             align-items: center;
             justify-content: space-around;
+            background-image: url("{% static 'animate/background.png' %}");
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .image-container {
@@ -119,25 +123,91 @@
         .signup-form a:hover {
             text-decoration: underline;
         }
+
+        .bubbles img {
+            width: 50px;
+            animation: bubble 7s linear infinite;
+        }
+
+        .bubbles {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            position: absolute;
+            bottom: -70px;
+        }
+
+        @keyframes bubble {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            70% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-80vh);
+                opacity: 0;
+            }
+        }
+
+        .bubbles img:nth-child(1) {
+            animation-delay: 2s;
+            width: 25px;
+        }
+
+        .bubbles img:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        .bubbles img:nth-child(3) {
+            animation-delay: 3s;
+            width: 25px;
+        }
+
+        .bubbles img:nth-child(4) {
+            animation-delay: 4.5s;
+        }
+
+        .bubbles img:nth-child(5) {
+            animation-delay: 3s;
+        }
+
+        .bubbles img:nth-child(6) {
+            animation-delay: 6s;
+            width: 20px;
+        }
+
+        .bubbles img:nth-child(7) {
+            animation-delay: 7s;
+            width: 35px;
+        }
     </style>
 </head>
 
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <header class = "nav">
+        <header class="nav">
             <nav>
                 <ul class="nav-links href-links">
                     <li><a href="/">Home</a></li>
                     <li><a href="/cse">CS</a></li>
                     <li><a href="/electronics">Electronics</a></li>
                 </ul>
-                <ul class = "nav-links user-links">
+                <ul class="nav-links user-links">
                     {%if user.is_authenticated %}
-                        <li><a href="/logout">Log Out</a></li>
+                    <li><a href="/logout">Log Out</a></li>
                     {%else%}
-                        <li><a href="/signup">Sign Up</a></li>
-                        <li><a href="/login">Log In</a></li>
+                    <li><a href="/signup">Sign Up</a></li>
+                    <li><a href="/login">Log In</a></li>
                     {%endif%}
                 </ul>
             </nav>
@@ -148,7 +218,6 @@
     <div class="main-container">
         <div class="signup-container">
             <div class="image-container">
-                {% load static %}
                 <img src="{% static 'postit-logo.png' %}" alt="Postit Logo" loading="lazy" />
             </div>
             <div class="signup-form">
@@ -181,6 +250,15 @@
                     </button>
                     <a href="/login">Already have an account? Login</a>
                 </form>
+            </div>
+            <div class="bubbles">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
+                <img src="{% static 'animate/bubble.png' %}" alt="bubble">
             </div>
         </div>
     </div>
