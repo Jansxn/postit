@@ -182,6 +182,21 @@
       font-size: 20px;
       margin-right: 10px;
     }
+
+    .nav-postboxhead-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .nav-postboxhead{
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-decoration: underline;
+      text-align: center;
+      width: 100%;
+    }
   </style>
 </head>
 
@@ -195,12 +210,26 @@
           {% if has_verified_permission or user.is_superuser %}
           <a href="{% url 'createpostbox'%}" class="createpostbox"> <i class="fa-solid fa-circle-plus"></i>Create PostBox </a>
           {% endif %}
-        {%for postbox in postbox_list%}
-            <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
-              aria-current="true">
-              <span class="nav-postbox">{{ postbox }}</span>
-            </a>
-        {%endfor%}
+          {% if user.is_authenticated %}
+          <div class="nav-postboxhead-container" aria-current="true">
+            <span class="nav-postboxhead">Subscribed PostBoxes</span>
+          </div>
+          {%for postbox in subscribed_postbox_list%}
+              <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
+                aria-current="true">
+                <span class="nav-postbox">{{ postbox }}</span>
+              </a>
+          {%endfor%}
+          {% endif %}
+          <div class="nav-postboxhead-container mt-4" aria-current="true">
+            <span class="nav-postboxhead">All PostBoxes</span>
+          </div>
+          {%for postbox in postbox_list%}
+              <a href="{% url 'postbox' postbox_name=postbox %}" class="list-group-item list-group-item-action py-2 ripple"
+                aria-current="true">
+                <span class="nav-postbox">{{ postbox }}</span>
+              </a>
+          {%endfor%}
         </div>
       </div>
     </nav>

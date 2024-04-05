@@ -1,21 +1,23 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from .models import Uploads, PostBox
+from .models import Uploads, PostBox, Subscription
 from .forms import CreatePostForm
 
 def index(request):
     all_posts = Uploads.objects.all().order_by('-id')
     postbox_list = PostBox.objects.all()
+    subscribed_postbox_list = Subscription.objects.filter(user=request.user).values_list('postbox__title', flat=True)
     has_verified_permission = request.user.groups.filter(name='verified').exists()
-
     context = {"all": all_posts,
                "postbox_list": postbox_list,
-               "has_verified_permission": has_verified_permission}
+               "has_verified_permission": has_verified_permission,
+               "subscribed_postbox_list": subscribed_postbox_list}
 
     return render(request, "home.html", context)
 
 def postbox(request, postbox_name):
     postbox_description = "This is a postbox for " + postbox_name
+    subscribed_postbox_list = Subscription.objects.filter(user=request.user).values_list('postbox__title', flat=True)
     showfrom = True
     try:
         postbox = PostBox.objects.get(title=postbox_name)
@@ -31,6 +33,7 @@ def postbox(request, postbox_name):
     return render(request, "postbox.html", {
         "postbox_name": postbox_name,
         "postbox_description": postbox_description,
+        "subscribed_postbox_list":subscribed_postbox_list,
         "has_verified_permission": has_verified_permission,
         "postbox_list": postbox_list,
         "uploads": uploads,
@@ -68,5 +71,16 @@ def createpostbox(request):
     else:
         postbox_list = PostBox.objects.all()
         has_verified_permission = request.user.groups.filter(name='verified').exists()
+        subscribed_postbox_list = Subscription.objects.filter(user=request.user).values_list('postbox__title', flat=True)
         return render(request, "createpostbox.html", {"postbox_list": postbox_list,
-                                                      "has_verified_permission": has_verified_permission})
+                                                      "has_verified_permission": has_verified_permission,
+                                                      "subscribed_postbox_list": subscribed_postbox_list
+                                                      })
+        
+        
+def subscribe(request, postbox_name):
+    postbox = PostBox.objects.get(title=postbox_name)
+    user = request.user
+    if not Subscription.objects.filter(user=user, postbox=postbox).exists():
+        Subscription.objects.create(user=user, postbox=postbox)
+    return redirect('index')
