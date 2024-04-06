@@ -90,6 +90,8 @@ def createpostbox(request):
 def subscribe(request, postbox_name):
     postbox = PostBox.objects.get(title=postbox_name)
     user = request.user
-    if not Subscription.objects.filter(user=user, postbox=postbox).exists():
+    if request.user.is_authenticated and not Subscription.objects.filter(user=user, postbox=postbox).exists():
         Subscription.objects.create(user=user, postbox=postbox)
-    return redirect('index')
+    elif request.user.is_authenticated and Subscription.objects.filter(user=user, postbox=postbox).exists():
+        Subscription.objects.filter(user=user, postbox=postbox).delete()
+    return redirect('postbox', postbox_name=postbox_name)
