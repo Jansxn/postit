@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import Uploads, PostBox, Subscription
 from .forms import CreatePostForm
+from django.core.mail import send_mail
+from django.conf import settings
 
 def index(request):
     all_posts = Uploads.objects.all().order_by('-id')
@@ -58,12 +60,35 @@ def createpost(request):
             print(f"Current user: {postbox}")
             form.instance.submission_page = postbox
             form.save()
+            
+            # Get all subscriptions for the postbox
+            subscriptions = Subscription.objects.filter(postbox=postbox)
+
+            # Send an email to each user
+            for subscription in subscriptions:
+                subject = f'New Post Created in "{postbox.title}"'
+                message = f"""
+Hello {subscription.user.username},
+
+A new post titled "{form.instance.title}" has just been published in the "{postbox.title}" department.
+
+Here's a sneak peek of the content:
+
+{form.instance.content[:100]}... 
+
+We encourage you to log in to our platform as soon as possible to view the full content and stay updated.
+
+Best regards,
+PostIT Team
+"""
+                email_from = settings.EMAIL_HOST_USER
+                recipient_list = [subscription.user.email,]
+                send_mail(subject, message, email_from, recipient_list)
+                
             return redirect('index')
         else:
             print(form.errors)
             return redirect('createpost')
-
-
     else:
         rules = "Please make sure to follow the rules and guidlines"
         return render(request, "postbox.html", {"postbox_name": rules})

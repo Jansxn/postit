@@ -145,3 +145,14 @@ GRAPH_MODELS = {
   'group_models': True,
 }
 
+from dotenv import load_dotenv
+load_dotenv()
+
+EMAIL_BACKEND = os.environ.get('DJANGO_EMAIL_BACKEND')
+EMAIL_HOST = os.environ.get('DJANGO_EMAIL_HOST')
+EMAIL_PORT = os.environ.get('DJANGO_EMAIL_PORT')
+EMAIL_USE_TLS = os.environ.get('DJANGO_EMAIL_USE_TLS') == 'True'
+EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
