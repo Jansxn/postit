@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 EXTERNAL_APPS = [
     'accounts',
     'home',
+    'django_extensions',
 ]
 
 INSTALLED_APPS += EXTERNAL_APPS
@@ -138,4 +139,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 X_FRAME_OPTIONS = 'ALLOWALL'
 SECURE_REFERRER_POLICY =  None
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
 
