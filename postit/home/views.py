@@ -57,7 +57,7 @@ def createpost(request):
             form.instance.user = current_user
             current_page = request.POST.get('page_name')
             postbox = PostBox.objects.get(title=current_page)
-            print(f"Current user: {postbox}")
+            # print(f"Current user: {postbox}")
             form.instance.submission_page = postbox
             form.save()
             
@@ -66,11 +66,11 @@ def createpost(request):
 
             # Send an email to each user
             for subscription in subscriptions:
-                subject = f'New Post Created in "{postbox.title}"'
+                subject = f'New Post Created in {postbox.title.capitalize()}'
                 message = f"""
-Hello {subscription.user.username},
+Hello {subscription.user.username.capitalize()},
 
-A new post titled "{form.instance.title}" has just been published in the "{postbox.title}" department.
+A new post titled "{form.instance.title}" has just been published in the {postbox.title.capitalize()} department's PostBox.
 
 Here's a sneak peek of the content:
 
