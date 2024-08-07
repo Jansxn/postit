@@ -21,12 +21,6 @@ git clone https://github.com/yourusername/PostIT.git
 cd PostIT
 ```
 
-- Clone the Repository
-```bash
-git clone https://github.com/yourusername/PostIT.git
-cd PostIT
-```
-
 - Apply Migrations
 ```bash
 python manage.py makemigrations
