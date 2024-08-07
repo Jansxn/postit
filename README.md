@@ -2,7 +2,7 @@
 
 PostIT is a user-friendly web application specifically designed to streamline the management of department e-newsletters. Traditional methods, like email blasts and static web pages, often struggle with organization and user engagement. This innovative platform tackles these issues by providing a centralized hub for creating and publishing department news.
 
-##Project Overview
+## Project Overview
 PostIT revolutionizes content sharing and organization within online communities. Leveraging the robust Django web framework, known for its ability to streamline development processes and produce clean, well-structured code, PostIT ensures functionality and maintainability in the long run.
 
 For more info regarding the projects, refer to the [PostIT Documentation](./IT_MINIPROJECT_REPORT%20(1).pdf).
