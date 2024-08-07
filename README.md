@@ -17,7 +17,7 @@ For more info regarding the projects, refer to the [PostIT Documentation](./IT_M
 
 - Clone the Repository
 ```bash
-git clone [https://github.com/yourusername/PostIT.git](https://github.com/Jansxn/postit.git)
+git clone https://github.com/Jansxn/postit.git
 cd postit
 ```
 
